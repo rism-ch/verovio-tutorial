@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <title>Verovio example for accessing element</title>
+        <script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript" ></script>
+        <!-- We also use jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <!-- Basic events from example 02 -->
+        <script src="javascript/basic-events.js" type="text/javascript" ></script>
+        <!-- A stylesheet for the help overlay -->
+        <link rel="stylesheet" href="css/tutorial.css" /> 
+    </head>
+    <body style="margin: 0px;">
+        
+        <!-- A help overlay -->
+        <div id="help_overlay">
+            <p>Change the zoom with '+' or '-' and see highlighted chord always being displayed</p>
+        </div>
+        
+        <!-- The div where we are going to insert the SVG -->
+        <div id="svg_output"/>
+
+        <script type="text/javascript">
+            var vrvToolkit = new verovio.toolkit();
+            var page = 1;
+            var zoom = 100;
+            var pageHeight = 2970;
+            var pageWidth = 2100;
+            
+            /////////////////////////////////
+            /* The id we want to highlight */
+            /////////////////////////////////
+            var id="";
+
+            function set_options() {
+                pageHeight = $(document).height() * 100 / zoom ;
+                pageWidth = $(window).width() * 100 / zoom ;
+                options = JSON.stringify({
+                            pageHeight: pageHeight,
+                            pageWidth: pageWidth,
+                            scale: zoom,
+                            adjustPageHeight: 1,
+                            ignoreLayout: 1
+                        });
+                vrvToolkit.setOptions(options);
+            }
+    
+            function load_data(data) {
+                set_options();
+                vrvToolkit.loadData(data);
+
+                page = 1;
+                load_page();
+            }
+
+            //////////////////////////////////////////////////////////////////////
+            /* A function that loads the page where the id is and highlights it */
+            //////////////////////////////////////////////////////////////////////
+            function load_page() {
+                var elementPage = vrvToolkit.getPageWithElement(id);
+                if (elementPage == 0) {
+                    console.log("ID not found");
+                }
+                else {
+                    page = elementPage;
+                }
+        
+                svg = vrvToolkit.renderPage(page, "");
+                $("#svg_output").html(svg);
+                
+                ///////////////////////////
+                /* Highlight the element */
+                ///////////////////////////
+                $("#" + id).attr("fill", "#f00").attr("stroke", "#f00");
+            };
+    
+            $(document).ready(function() {
+        
+                $(window).keyup(function(event){
+                    // Process navigation an zoom basic events
+                    process_basic_events(event);
+                });
+        
+                $(window).resize(function(){
+                    apply_zoom();
+                });
+        
+                /////////////////////////////
+                /* An id in the file below */
+                /////////////////////////////
+                id = "chord-L1186F7";
+                var file = "mei/Beethoven_StringQuartet_Op18_No2.mei";
+                $.ajax({
+                    url: file
+                    , dataType: "text"
+                    , success: function(data) {
+                        load_data(data);
+                    }
+                });
+                
+                ///////////////////////////////////////////////
+                /* examples how to change the id in the console
+                    id = "note-L1846F7";
+                    load_page();
+                */
+                ///////////////////////////////////////////////
+        
+            });        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+#help_overlay {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    padding: 20px;
+    background-color: rgba(0,0,0,.8);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    z-index: 10000;
+    color: #fff;
+}
+
+#help_overlay p {
+    padding: 0px;
+    margin: 2px;
+}

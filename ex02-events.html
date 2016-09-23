@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <title>Verovio example with events</title>
+        <script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript" ></script>
+        <!-- We also use jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <!-- A stylesheet for the help overlay -->
+        <link rel="stylesheet" href="css/tutorial.css" />
+    </head>
+    <body style="margin: 0px;">
+        
+        <!--////////////////-->
+        <!-- A help overlay -->
+        <!--////////////////-->
+        <div id="help_overlay">
+            <p>Press <b>'+'</b> or <b>'-'</b> to zoom in or out</p>
+            <p>Press <b>right</b> or <b>left</b> arrows to navigate the score</p>
+            <p>Press <b>ctrl + right</b> / <b>left</b> arrows to go to the beginning or the end</p>
+            <p>Resize the window to see the score adjusting to it</p>
+        </div>
+        
+        <!-- The div where we are going to insert the SVG -->
+        <div id="svg_output"/>
+        
+        <script type="text/javascript">
+            var vrvToolkit = new verovio.toolkit();
+            var page = 1;
+            var zoom = 40;
+            var pageHeight = 2970;
+            var pageWidth = 2100;
+            
+            function set_options() {
+                pageHeight = $(document).height() * 100 / zoom;
+                pageWidth = $(window).width() * 100 / zoom;
+                options = JSON.stringify({
+                            pageHeight: pageHeight,
+                            pageWidth: pageWidth,
+                            scale: zoom,
+                            adjustPageHeight: 1,
+                            ignoreLayout: 1
+                        });
+                vrvToolkit.setOptions(options);
+            }
+            
+            function load_data(data) {
+                set_options();
+                vrvToolkit.loadData(data);
+                
+                page = 1;
+                load_page();
+            }
+            
+            /////////////////////////////////////////////
+            /* A function that loads the selected page */
+            /////////////////////////////////////////////
+            function load_page() {
+                svg = vrvToolkit.renderPage(page, "");
+                $("#svg_output").html(svg);
+            };
+            
+            ////////////////////////////////////////////////////////////
+            /* A function that redoes the layout and reloads the page */
+            ////////////////////////////////////////////////////////////
+            function apply_zoom() {
+                set_options();
+                vrvToolkit.redoLayout();
+                
+                page = 1;
+                load_page();
+            }
+            
+            ////////////////////////////////////////////////
+            /* Some functions for handling various events */
+            ////////////////////////////////////////////////
+            function next_page() {
+                if (page >= vrvToolkit.getPageCount()) {
+                    return;
+                }
+                
+                page = page + 1;
+                load_page();
+            };
+            
+            function prev_page() {
+                if (page <= 1) {
+                    return;
+                }
+                
+                page = page - 1;
+                load_page();
+            };
+            
+            function first_page() {
+                page = 1;
+                load_page();
+            };
+            
+            function last_page() {
+                page = vrvToolkit.getPageCount();
+                load_page();
+            };
+            
+            function zoom_out() {
+                if (zoom < 20) {
+                    return;
+                }
+                zoom = zoom / 2;
+                apply_zoom();
+            }
+            
+            function zoom_in() {
+                if (zoom > 80) {
+                    return;
+                }
+                zoom = zoom * 2;
+                apply_zoom();
+            }
+            
+            $(document).ready(function() {
+                
+                ////////////////////////
+                /* Binding the events */
+                ////////////////////////
+                $(window).keyup(function(event){
+                    if (event.ctrlKey && (event.keyCode == 37)) {
+                        first_page();
+                    }
+                    else if (event.keyCode == 37) {
+                        prev_page();
+                    }
+                    else if (event.ctrlKey && (event.keyCode == 39)) {
+                        last_page();
+                    }
+                    else if (event.keyCode == 39) {
+                        next_page();
+                    }
+                    // see http://www.javascripter.net/faq/keycodes.htm
+                    else if ((event.keyCode == 107) || (event.keyCode == 187) || (event.keyCode == 61) ) {
+                        zoom_in();
+                    }
+                    else if ((event.keyCode == 109) || (event.keyCode == 189) || (event.keyCode == 173)) {
+                        zoom_out();
+                    }
+                });
+                
+                $(window).resize(function(){
+                    apply_zoom();
+                });
+                
+                var file = location.search.substring(1);
+                if (file.length == 0) {
+                     file = "mei/Beethoven_StringQuartet_Op18_No2.mei";
+                }
+                $.ajax({
+                    url: file
+                    , dataType: "text"
+                    , success: function(data) {
+                        load_data(data);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

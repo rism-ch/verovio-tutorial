@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>Verovio example using access to MEI attributes</title>
+        <script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript" ></script>
+        <!-- We also use jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <!-- Basic events from example 02 -->
+        <script src="javascript/basic-events.js" type="text/javascript" ></script>
+        <!-- A stylesheet for the help overlay -->
+        <link rel="stylesheet" href="css/tutorial.css" />
+    </head>
+    <body style="margin: 0px;">
+        
+        <!-- A help overlay -->
+        <div id="help_overlay">
+            <p>Press <b>a</b>, <b>b</b>, <b>c</b> (etc.) to highlight notes with the corresponding pitch name</p>
+        </div>
+        
+        <!-- The div where we are going to insert the SVG -->
+        <div id="svg_output"/>
+        
+        <script type="text/javascript">
+            var vrvToolkit = new verovio.toolkit();
+            var page = 1;
+            var zoom = 50;
+            var pageHeight = 2970;
+            var pageWidth = 2100;
+            
+            //////////////////////////
+            /* A highlighting pname */
+            //////////////////////////
+            var pname = "c";
+            
+            function set_options( ) {
+                pageHeight = $(document).height() * 100 / zoom ;
+                pageWidth = $(window).width() * 100 / zoom ;
+                options = JSON.stringify({
+                            pageHeight: pageHeight,
+                            pageWidth: pageWidth,
+                            scale: zoom,
+                            adjustPageHeight: 1,
+                            ignoreLayout: 1
+                        });
+                vrvToolkit.setOptions( options );
+            }
+            
+            function load_data(data) {
+                set_options();
+                vrvToolkit.loadData(data);
+                
+                page = 1;
+                load_page();
+            }
+            
+            function load_page() {
+                svg = vrvToolkit.renderPage(page, "");
+                $("#svg_output").html(svg);
+                
+                /////////////////////////////////////////////////////
+                /* For all notes, get their attribute hash in JSON */
+                /////////////////////////////////////////////////////
+                $(".note").each(function(i) {
+                    attrStr = vrvToolkit.getElementAttr($(this).attr("id"));
+                    var attr = JSON.parse(attrStr);
+                    if (attr.pname && (attr.pname == pname)) {
+                        $(this).attr("fill", "#f00").attr("stroke", "#f00");
+                    }
+                });
+            }
+            
+            $( document ).ready(function() {
+                
+                $(window).keyup(function(event){
+                    // Process navigation an zoom basic events
+                    process_basic_events(event);
+                    
+                    ///////////////////////////////////////////
+                    /* Key events for switching pname choice */
+                    ///////////////////////////////////////////
+                    if (event.keyCode == 67)
+                        pname = "c";
+                    else if (event.keyCode == 68)
+                        pname = "d";
+                    else if (event.keyCode == 69)
+                        pname = "e";
+                    else if (event.keyCode == 70)
+                        pname = "f";
+                    else if (event.keyCode == 71)
+                        pname = "g";
+                    else if (event.keyCode == 65)
+                        pname = "a";
+                    else if (event.keyCode == 66)
+                        pname = "b";
+                    
+                    load_page();
+                });
+                
+                $(window).resize(function(){
+                    apply_zoom();
+                });
+                
+                var file = "mei/Beethoven_StringQuartet_Op18_No2.mei";
+                $.ajax({
+                    url: file
+                    , dataType: "text"
+                    , success: function(data) {
+                        load_data( data );
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

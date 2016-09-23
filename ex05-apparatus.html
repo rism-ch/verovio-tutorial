@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>Verovio example with apparatus</title>
+        <script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript" ></script>
+        <!-- We also use jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <!-- Basic events from example 02 -->
+        <script src="javascript/basic-events.js" type="text/javascript" ></script>
+        <!-- A stylesheet for the help overlay -->
+        <link rel="stylesheet" href="css/tutorial.css" />   
+    </head>
+    <body style="margin: 0px;">
+        <!-- The div where we are going to insert the SVG -->
+        <div id="svg_output"/>
+
+        <script type="text/javascript">
+            var vrvToolkit = new verovio.toolkit();
+            var page = 1;
+            var zoom = 50;
+            var pageHeight = 2970;
+            var pageWidth = 2100;
+            
+            ///////////////////////////////////////////////////
+            /* A variable for selecting the <rdg> in a <app> */
+            ///////////////////////////////////////////////////
+            var app_xpath = "";
+            
+            function set_options() {
+                pageHeight = $(document).height() * 100 / zoom ;
+                pageWidth = $(window).width() * 100 / zoom ;
+                options = JSON.stringify({
+                            pageHeight: pageHeight,
+                            pageWidth: pageWidth,
+                            scale: zoom,
+                            adjustPageHeight: 1,
+                            ignoreLayout: 1,
+                            appXPathQuery: app_xpath
+                        });
+                vrvToolkit.setOptions(options);
+            }
+            
+            function load_data(data) {
+                set_options();
+                vrvToolkit.loadData(data);
+                
+                page = 1;
+                load_page();
+            }
+            
+            function load_page() {
+                svg = vrvToolkit.renderPage(page, "");
+                $("#svg_output").html(svg);
+                
+                ///////////////////////////////////////////////////
+                /* Highlights the lem in blue and the rdg in red */
+                ///////////////////////////////////////////////////
+                $(".lem").attr("fill", "#00e").attr("stroke", "#00e");
+                $(".rdg").attr("fill", "#d00").attr("stroke", "#d00");
+            };
+            
+            function load_file() {
+                file = "mei/Marenzio_Quarto_a_6_02.mei";
+                $.ajax({
+                    url: file
+                    , dataType: "text"
+                    , success: function(data) {
+                        load_data(data);
+                    }
+                });
+            }
+            
+            $(document).ready(function() {
+                
+                $(window).keyup(function(event){
+                    // Process navigation an zoom basic events
+                    process_basic_events(event);
+                    
+                    //////////////////////////////////////////
+                    /* Key events for switching the reading */
+                    //////////////////////////////////////////
+                    if (event.keyCode == 49) {
+                        app_xpath = ""
+                        load_file();
+                    }
+                    else if (event.keyCode == 50) {
+                        app_xpath = "./rdg[contains(@source, '1570')]";
+                        load_file();
+                    }
+                });
+                
+                $(window).resize(function(){
+                    apply_zoom();
+                });
+                
+                load_file();
+            });
+        </script>
+    </body>
+</html>
