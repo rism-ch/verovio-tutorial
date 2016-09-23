@@ -31,7 +31,7 @@
             //////////////////////////
             var pname = "c";
             
-            function set_options( ) {
+            function setOptions( ) {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(window).width() * 100 / zoom ;
                 options = JSON.stringify({
@@ -44,15 +44,15 @@
                 vrvToolkit.setOptions( options );
             }
             
-            function load_data(data) {
-                set_options();
+            function loadData(data) {
+                setOptions();
                 vrvToolkit.loadData(data);
                 
                 page = 1;
-                load_page();
+                loadPage();
             }
             
-            function load_page() {
+            function loadPage() {
                 svg = vrvToolkit.renderPage(page, "");
                 $("#svg_output").html(svg);
                 
@@ -92,11 +92,11 @@
                     else if (event.keyCode == 66)
                         pname = "b";
                     
-                    load_page();
+                    loadPage();
                 });
                 
                 $(window).resize(function(){
-                    apply_zoom();
+                    applyZoom();
                 });
                 
                 var file = "mei/Beethoven_StringQuartet_Op18_No2.mei";
@@ -104,7 +104,7 @@
                     url: file
                     , dataType: "text"
                     , success: function(data) {
-                        load_data( data );
+                        loadData( data );
                     }
                 });
             });

@@ -25,7 +25,7 @@
             ///////////////////////////////////////////////////
             var app_xpath = "";
             
-            function set_options() {
+            function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(window).width() * 100 / zoom ;
                 options = JSON.stringify({
@@ -39,15 +39,15 @@
                 vrvToolkit.setOptions(options);
             }
             
-            function load_data(data) {
-                set_options();
+            function loadData(data) {
+                setOptions();
                 vrvToolkit.loadData(data);
                 
                 page = 1;
-                load_page();
+                loadPage();
             }
             
-            function load_page() {
+            function loadPage() {
                 svg = vrvToolkit.renderPage(page, "");
                 $("#svg_output").html(svg);
                 
@@ -58,13 +58,13 @@
                 $(".rdg").attr("fill", "#d00").attr("stroke", "#d00");
             };
             
-            function load_file() {
+            function loadFile() {
                 file = "mei/Marenzio_Quarto_a_6_02.mei";
                 $.ajax({
                     url: file
                     , dataType: "text"
                     , success: function(data) {
-                        load_data(data);
+                        loadData(data);
                     }
                 });
             }
@@ -80,19 +80,19 @@
                     //////////////////////////////////////////
                     if (event.keyCode == 49) {
                         app_xpath = ""
-                        load_file();
+                        loadFile();
                     }
                     else if (event.keyCode == 50) {
                         app_xpath = "./rdg[contains(@source, '1570')]";
-                        load_file();
+                        loadFile();
                     }
                 });
                 
                 $(window).resize(function(){
-                    apply_zoom();
+                    applyZoom();
                 });
                 
-                load_file();
+                loadFile();
             });
         </script>
     </body>

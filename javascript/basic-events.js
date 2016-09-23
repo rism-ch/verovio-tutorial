@@ -1,75 +1,75 @@
-function next_page() {
+function nextPage() {
 	if (page >= vrvToolkit.getPageCount()) {
 		return;
 	}
 
 	page = page + 1;
-	load_page();
+	loadPage();
 };
 
-function prev_page() {
+function prevPage() {
 	if (page <= 1) {
 		return;
 	}
 
 	page = page - 1;
-	load_page();
+	loadPage();
 };
 
-function first_page() {
+function firstPage() {
 	page = 1;
-	load_page();
+	loadPage();
 };
 
-function last_page() {
+function lastPage() {
 	page = vrvToolkit.getPageCount();
-	load_page();
+	loadPage();
 };
 
-function apply_zoom() {
-	set_options();
+function applyZoom() {
+	setOptions();
 	vrvToolkit.redoLayout();
 
 	page = 1;
-	load_page();
+	loadPage();
 }
 
-function zoom_out() {
+function zoomOut() {
 	if (zoom < 20) {
 		return;
 	}
 
 	zoom = zoom / 2;
-	apply_zoom();
+	applyZoom();
 }
 
-function zoom_in() {
+function zoomIn() {
 	if (zoom > 80) {
 		return;
 	}
 
 	zoom = zoom * 2;
-	apply_zoom();
+	applyZoom();
 }
 
 function process_basic_events(event) {
     if (event.ctrlKey && (event.keyCode == 37)) {
-        first_page();
+        firstPage();
     }
     else if (event.keyCode == 37) {
-        prev_page();
+        prevPage();
     }
     else if (event.ctrlKey && (event.keyCode == 39)) {
-        last_page();
+        lastPage();
     }
     else if (event.keyCode == 39) {
-        next_page();
+        nextPage();
     }
     // see http://www.javascripter.net/faq/keycodes.htm
     else if ((event.keyCode == 107) || (event.keyCode == 187) || (event.keyCode == 61)) {
-        zoom_in();
+        zoomIn();
     }
     else if ((event.keyCode == 109) || (event.keyCode == 189) || (event.keyCode == 173)) {
-        zoom_out();
+        zoomOut();
     }
 }

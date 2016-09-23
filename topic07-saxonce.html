@@ -39,7 +39,7 @@
             /////////////////////////////////////////////////////////////
             var voice = 1;
             
-            function set_options() {
+            function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(document).width() * 100 / zoom ;
                 options = JSON.stringify({
@@ -54,15 +54,15 @@
                 vrvToolkit.setOptions(options);
             }
             
-            function load_data(data) {
-                set_options();
+            function loadData(data) {
+                setOptions();
                 vrvToolkit.loadData(data);
 
                 page = 1;
-                load_page();
+                loadPage();
             }
             
-            function load_page() {
+            function loadPage() {
                 svg = vrvToolkit.renderPage(page, "");
                 $("#svg_output").html(svg);
             };
@@ -70,13 +70,13 @@
             ////////////////////////////////////////////////////////
             /* A function that applies the XSLT and load the data */
             ////////////////////////////////////////////////////////
-            function load_file() {
+            function loadFile() {
                 var file = "mei/Beethoven_StringQuartet_Op18_No2.mei";
                 var xsl = Saxon.requestXML("xslt/stripStaff.xsl");
                 var xml = Saxon.requestXML(file);
                 var proc = Saxon.newXSLT20Processor(xsl);
                 proc.setParameter(null, "voice", voice);
-                load_data(Saxon.serializeXML(proc.transformToDocument(xml)));
+                loadData(Saxon.serializeXML(proc.transformToDocument(xml)));
             }
             
             $(document).ready(function() {
@@ -91,17 +91,17 @@
                     if ((event.keyCode > 48) &&  (event.keyCode < 59)) {
                         voice = event.keyCode - 48;
                         //console.log(voice);
-                        load_file();
+                        loadFile();
                     }
                 });
                 
                 $(window).resize(function(){
-                    apply_zoom();
+                    applyZoom();
                 });
             });
             
             var onSaxonLoad = function() {        
-                load_file();
+                loadFile();
             };
         </script>
     </body>

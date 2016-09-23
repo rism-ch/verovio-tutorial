@@ -34,7 +34,7 @@
             ///////////////////////////
             var choice = 1;
             
-            function set_options( ) {
+            function setOptions( ) {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(window).width() * 100 / zoom ;
                 options = JSON.stringify({
@@ -47,18 +47,18 @@
                 vrvToolkit.setOptions( options );
             }
             
-            function load_data(data) {
-                set_options();
+            function loadData(data) {
+                setOptions();
                 vrvToolkit.loadData(data);
                 
                 page = 1;
-                load_page();
+                loadPage();
             }
             
             /////////////////////////////////////////////////////////////////
             /* Load the page and highlight according to the current choice */
             /////////////////////////////////////////////////////////////////
-            function load_page() {
+            function loadPage() {
                 svg = vrvToolkit.renderPage(page, "");
                 $("#svg_output").html(svg);
                 
@@ -106,12 +106,12 @@
                     /////////////////////////////////////////////////
                     if ((event.keyCode > 48) && (event.keyCode < 53)) {
                         choice = event.keyCode - 48;
-                        load_page();
+                        loadPage();
                     }
                 });
         
                 $(window).resize(function(){
-                    apply_zoom();
+                    applyZoom();
                 });
                 
                 var file = "mei/Beethoven_StringQuartet_Op18_No2.mei";
@@ -119,7 +119,7 @@
                     url: file
                     , dataType: "text"
                     , success: function(data) {
-                        load_data( data );
+                        loadData( data );
                     }
                 });
             });
