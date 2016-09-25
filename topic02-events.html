@@ -29,7 +29,7 @@
             var pageHeight = 2970;
             var pageWidth = 2100;
             
-            function set_options() {
+            function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom;
                 pageWidth = $(window).width() * 100 / zoom;
                 options = JSON.stringify({
@@ -42,18 +42,18 @@
                 vrvToolkit.setOptions(options);
             }
             
-            function load_data(data) {
-                set_options();
+            function loadData(data) {
+                setOptions();
                 vrvToolkit.loadData(data);
                 
                 page = 1;
-                load_page();
+                loadPage();
             }
             
             /////////////////////////////////////////////
             /* A function that loads the selected page */
             /////////////////////////////////////////////
-            function load_page() {
+            function loadPage() {
                 svg = vrvToolkit.renderPage(page, "");
                 $("#svg_output").html(svg);
             };
@@ -61,59 +61,59 @@
             ////////////////////////////////////////////////////////////
             /* A function that redoes the layout and reloads the page */
             ////////////////////////////////////////////////////////////
-            function apply_zoom() {
-                set_options();
+            function applyZoom() {
+                setOptions();
                 vrvToolkit.redoLayout();
                 
                 page = 1;
-                load_page();
+                loadPage();
             }
             
             ////////////////////////////////////////////////
             /* Some functions for handling various events */
             ////////////////////////////////////////////////
-            function next_page() {
+            function nextPage() {
                 if (page >= vrvToolkit.getPageCount()) {
                     return;
                 }
                 
                 page = page + 1;
-                load_page();
+                loadPage();
             };
             
-            function prev_page() {
+            function prevPage() {
                 if (page <= 1) {
                     return;
                 }
                 
                 page = page - 1;
-                load_page();
+                loadPage();
             };
             
-            function first_page() {
+            function firstPage() {
                 page = 1;
-                load_page();
+                loadPage();
             };
             
-            function last_page() {
+            function lastPage() {
                 page = vrvToolkit.getPageCount();
-                load_page();
+                loadPage();
             };
             
-            function zoom_out() {
+            function zoomOut() {
                 if (zoom < 20) {
                     return;
                 }
                 zoom = zoom / 2;
-                apply_zoom();
+                applyZoom();
             }
             
-            function zoom_in() {
+            function zoomIn() {
                 if (zoom > 80) {
                     return;
                 }
                 zoom = zoom * 2;
-                apply_zoom();
+                applyZoom();
             }
             
             $(document).ready(function() {
@@ -123,28 +123,28 @@
                 ////////////////////////
                 $(window).keyup(function(event){
                     if (event.ctrlKey && (event.keyCode == 37)) {
-                        first_page();
+                        firstPage();
                     }
                     else if (event.keyCode == 37) {
-                        prev_page();
+                        prevPage();
                     }
                     else if (event.ctrlKey && (event.keyCode == 39)) {
-                        last_page();
+                        lastPage();
                     }
                     else if (event.keyCode == 39) {
-                        next_page();
+                        nextPage();
                     }
                     // see http://www.javascripter.net/faq/keycodes.htm
                     else if ((event.keyCode == 107) || (event.keyCode == 187) || (event.keyCode == 61) ) {
-                        zoom_in();
+                        zoomIn();
                     }
                     else if ((event.keyCode == 109) || (event.keyCode == 189) || (event.keyCode == 173)) {
-                        zoom_out();
+                        zoomOut();
                     }
                 });
                 
                 $(window).resize(function(){
-                    apply_zoom();
+                    applyZoom();
                 });
                 
                 var file = location.search.substring(1);
@@ -155,7 +155,7 @@
                     url: file
                     , dataType: "text"
                     , success: function(data) {
-                        load_data(data);
+                        loadData(data);
                     }
                 });
             });

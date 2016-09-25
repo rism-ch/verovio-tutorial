@@ -22,7 +22,7 @@
             ///////////////////////////////////////////////////
             /* A function for setting options to the toolkit */
             ///////////////////////////////////////////////////
-            function set_options() {
+            function setOptions() {
                 //////////////////////////////////////////////////////////////
                 /* Adjust the height and width according to the window size */
                 //////////////////////////////////////////////////////////////
@@ -41,8 +41,8 @@
             ////////////////////////////////////////////////////////////////////////////////
             /* A function that sets the options, loads the data and render the first page */
             ////////////////////////////////////////////////////////////////////////////////
-            function load_data(data) {
-                set_options();
+            function loadData(data) {
+                setOptions();
                 vrvToolkit.loadData(data);
                 svg = vrvToolkit.renderPage(1, "");
                 $("#svg_output").html(svg);
@@ -54,7 +54,7 @@
                     url: file
                     , dataType: "text"
                     , success: function(data) {
-                        load_data(data);
+                        loadData(data);
                     }
                 });
             });

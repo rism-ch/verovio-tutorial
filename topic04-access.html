@@ -31,7 +31,7 @@
             /////////////////////////////////
             var id="";
 
-            function set_options() {
+            function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(window).width() * 100 / zoom ;
                 options = JSON.stringify({
@@ -44,18 +44,18 @@
                 vrvToolkit.setOptions(options);
             }
     
-            function load_data(data) {
-                set_options();
+            function loadData(data) {
+                setOptions();
                 vrvToolkit.loadData(data);
 
                 page = 1;
-                load_page();
+                loadPage();
             }
 
             //////////////////////////////////////////////////////////////////////
             /* A function that loads the page where the id is and highlights it */
             //////////////////////////////////////////////////////////////////////
-            function load_page() {
+            function loadPage() {
                 var elementPage = vrvToolkit.getPageWithElement(id);
                 if (elementPage == 0) {
                     console.log("ID not found");
@@ -81,7 +81,7 @@
                 });
         
                 $(window).resize(function(){
-                    apply_zoom();
+                    applyZoom();
                 });
         
                 /////////////////////////////
@@ -93,14 +93,14 @@
                     url: file
                     , dataType: "text"
                     , success: function(data) {
-                        load_data(data);
+                        loadData(data);
                     }
                 });
                 
                 ///////////////////////////////////////////////
                 /* examples how to change the id in the console
                     id = "note-L1846F7";
-                    load_page();
+                    loadPage();
                 */
                 ///////////////////////////////////////////////
         
