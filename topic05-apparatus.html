@@ -23,7 +23,7 @@
             ///////////////////////////////////////////////////
             /* A variable for selecting the <rdg> in a <app> */
             ///////////////////////////////////////////////////
-            var app_xpath = "";
+            var appXPath = "";
             
             function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
@@ -34,7 +34,7 @@
                             scale: zoom,
                             adjustPageHeight: 1,
                             ignoreLayout: 1,
-                            appXPathQuery: app_xpath
+                            appXPathQuery: appXPath
                         });
                 vrvToolkit.setOptions(options);
             }
@@ -79,11 +79,11 @@
                     /* Key events for switching the reading */
                     //////////////////////////////////////////
                     if (event.keyCode == 49) {
-                        app_xpath = ""
+                        appXPath = ""
                         loadFile();
                     }
                     else if (event.keyCode == 50) {
-                        app_xpath = "./rdg[contains(@source, '1570')]";
+                        appXPath = "./rdg[contains(@source, '1570')]";
                         loadFile();
                     }
                 });
