@@ -20,6 +20,17 @@
                 <p>Encoded by: Craig Stuart Sapp</p>
             </projectDesc>
         </encodingDesc>
+        <revisionDesc>
+            <change n="1">
+                <respStmt>
+                    <persName>Laurent Pugin</persName>
+              </respStmt>
+                <changeDesc>
+                    <p>Truncating the file and adding choice markup</p>
+                </changeDesc>
+                <date>2016-09-27</date>
+            </change>
+        </revisionDesc>
     </meiHead>
     <music>
         <body>
