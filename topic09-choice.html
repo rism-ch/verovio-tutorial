@@ -19,6 +19,7 @@
         <!-- A help overlay -->
         <div id="help_overlay">
             <p>Click on the blue elements to select an alternative content</p>
+            <p>Press <b>'r'</b> to reset all to the default</p>
         </div>
         
         <!-- The div where we are going to insert the SVG -->
@@ -150,11 +151,17 @@
                     // Process navigation an zoom basic events
                     process_basic_events(event);
                     
-                    /////////////////////////////
-                    /* Hide the overlay on ESC */
-                    /////////////////////////////
+                    /////////////////////////////////////////////
+                    /* Hide the overlay on ESC of reset on 'r' */
+                    /////////////////////////////////////////////
                     if (event.keyCode == 27) {
                         $("#choice_overlay").hide()
+                    }
+                    else if (event.keyCode == 82) {
+                        $("#choice_overlay").hide()
+                        choices = {};
+                        choiceXPathQueries = [];
+                        loadFile();
                     }
                 });
                 
