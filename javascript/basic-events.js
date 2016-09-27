@@ -52,7 +52,7 @@ function zoomIn() {
 	applyZoom();
 }
 
-function process_basic_events(event) {
+function processBasicEvents(event) {
     if (event.ctrlKey && (event.keyCode == 37)) {
         firstPage();
     }
