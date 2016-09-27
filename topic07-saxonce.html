@@ -71,7 +71,7 @@
             /* A function that applies the XSLT and load the data */
             ////////////////////////////////////////////////////////
             function loadFile() {
-                var file = "mei/Beethoven_StringQuartet_Op18_No2.mei";
+                var file = "mei/Beethoven_StringQuartet_op.18_no.2.mei";
                 var xsl = Saxon.requestXML("xslt/stripStaff.xsl");
                 var xml = Saxon.requestXML(file);
                 var proc = Saxon.newXSLT20Processor(xsl);
