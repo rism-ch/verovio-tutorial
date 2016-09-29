@@ -44,7 +44,7 @@
             function loadData(data) {
                 setOptions();
                 vrvToolkit.loadData(data);
-                svg = vrvToolkit.renderPage(1, "");
+                svg = vrvToolkit.renderPage(1, {});
                 $("#svg_output").html(svg);
             }
             
