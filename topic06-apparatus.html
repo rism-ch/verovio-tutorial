@@ -14,7 +14,7 @@
         <!-- A help overlay -->
         <div id="help_overlay">
             <p>Press <b>1</b> to show and highlight the lemma</p>
-            <p>Press <b>2</b> to show and highlight the readings where the @source contains "1570"</p>
+            <p>Press <b>2</b> to show and highlight the readings ("#source.1570")</p>
         </div>
         
         <!-- The div where we are going to insert the SVG -->
@@ -90,7 +90,7 @@
                         loadFile();
                     }
                     else if (event.keyCode == 50) {
-                        appXPath = "./rdg[contains(@source, '1570')]";
+                        appXPath = "./rdg[contains(@source, '#source.1570')]";
                         loadFile();
                     }
                 });
