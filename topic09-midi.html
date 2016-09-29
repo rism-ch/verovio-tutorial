@@ -52,7 +52,7 @@
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(document).width() * 100 / zoom ;
                 border = 50;
-                options = JSON.stringify({
+                options = {
                             inputFormat: 'mei',
                             pageHeight: pageHeight,
                             pageWidth: pageWidth,
@@ -60,7 +60,7 @@
                             scale: zoom,
                             adjustPageHeight: 1,
                             ignoreLayout: 1
-                        });
+                        };
                 vrvToolkit.setOptions(options);
             }
             
@@ -117,7 +117,7 @@
             var midiUpdate = function(time) {
                 // bug! time needs to be * 2 (- 800 for adjustment)
                 var vrvTime = Math.max(0, 2 * time - 800);
-                var elementsattime = JSON.parse(vrvToolkit.getElementsAtTime(vrvTime))
+                var elementsattime = vrvToolkit.getElementsAtTime(vrvTime);
                 if (elementsattime.page > 0) {
                     if (elementsattime.page != page) {
                         page = elementsattime.page;
