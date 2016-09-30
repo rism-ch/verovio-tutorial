@@ -1,0 +1,3 @@
+g.note:hover {
+    filter: url(note.svg#highlighting);
+}
