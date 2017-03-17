@@ -30,7 +30,7 @@
                 url: "mei/Beethoven_StringQuartet_op.18_no.2.mei"
                 , dataType: "text"
                 , success: function(data) {
-                    var svg = vrvToolkit.renderData(data);
+                    var svg = vrvToolkit.renderData(data, {});
                     $("#svg_output").html(svg);
                 }
             });
