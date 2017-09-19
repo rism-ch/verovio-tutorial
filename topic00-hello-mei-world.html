@@ -21,7 +21,8 @@
             ///////////////////////////
             /* Create the vrvToolkit */
             ///////////////////////////
-            var vrvToolkit = new verovio.toolkit();
+            // TODO: HERE CREATE THE TOOLKIT VARIABLE CALLING new verovio.toolkit();
+            
             
             ////////////////////////////////////
             /* Load the file using a HTTP GET */
@@ -30,7 +31,8 @@
                 url: "mei/Beethoven_StringQuartet_op.18_no.2.mei"
                 , dataType: "text"
                 , success: function(data) {
-                    var svg = vrvToolkit.renderData(data);
+                    // TODO: RETRIEVE THE SVG FROM THE TOOLKIT INTO AN svg VARIABLE USING renderData() OF THE TOOLKIT
+                    // PASS data TO THE TOOLKIT THAT NOW CONTAINS THE MEI DATA AS STRING
                     $("#svg_output").html(svg);
                 }
             });

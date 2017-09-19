@@ -56,21 +56,18 @@
             /* A function that loads the page where the id is and highlights it */
             //////////////////////////////////////////////////////////////////////
             function loadPage() {
+                // TODO: SET AN elementPage VARIABLE TO THE VALUE RETURNED BY THE getPageWithElement(id) OF THE TOOLKIT
+                // IF IT IS NOT 0, THIS IS THE PAGE WE WANT TO LOAD (SET page TO THAT VALUE)
+                // OTHERWISE NOTHING WE CAN DO
                 var elementPage = vrvToolkit.getPageWithElement(id);
-                if (elementPage == 0) {
-                    console.log("ID not found");
-                }
-                else {
-                    page = elementPage;
-                }
-        
+
                 svg = vrvToolkit.renderPage(page, {});
                 $("#svg_output").html(svg);
                 
                 ///////////////////////////
                 /* Highlight the element */
                 ///////////////////////////
-                $("#" + id).attr("fill", "#f00").attr("stroke", "#f00");
+                // TODO: HIGHLIGHT THE ELEMENT WITH THE id
             };
     
             $(document).ready(function() {

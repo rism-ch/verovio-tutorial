@@ -28,13 +28,12 @@
                 //////////////////////////////////////////////////////////////
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(window).width() * 100 / zoom ;
-                options = {
-                            pageHeight: pageHeight,
-                            pageWidth: pageWidth,
-                            scale: zoom,
-                            adjustPageHeight: 1,
-                            ignoreLayout: 1
-                        };
+                // TODO: CREATE AN options JSON OBEJCT WITH
+                // pageHeight AS pageHeight
+                // pageWidth AS pageWidth
+                // scale AS zoom
+                // adjustPageHeight AS 1
+                // ignoreLayout AS 1
                 vrvToolkit.setOptions(options);
             }
             

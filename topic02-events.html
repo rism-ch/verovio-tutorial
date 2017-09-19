@@ -75,18 +75,16 @@
             /* Some functions for handling various events */
             ////////////////////////////////////////////////
             function nextPage() {
-                if (page >= vrvToolkit.getPageCount()) {
-                    return;
-                }
-                
+                // TODO: CHECK THAT page IS NOT GREATER OR EQUAL TO THE VALUE RETURNED BY THE TOOLKIT METHOD getPageCount() 
+                // RETURN OTHERWISE
+
                 page = page + 1;
                 loadPage();
             };
             
             function prevPage() {
-                if (page <= 1) {
-                    return;
-                }
+                // TODO: CHECK THAT page IS NOT SMALLER OR EQUAL TO 1
+                // RETURN OTHERWISE
                 
                 page = page - 1;
                 loadPage();
@@ -98,7 +96,7 @@
             };
             
             function lastPage() {
-                page = vrvToolkit.getPageCount();
+                // TODO: SET page TO THE VALUE RETURNED BY THE TOOLKIT METHOD getPageCount()
                 loadPage();
             };
             

@@ -60,10 +60,9 @@
                 /* For all notes, get their attribute hash in JSON */
                 /////////////////////////////////////////////////////
                 $(".note").each(function(i) {
-                    var attr = vrvToolkit.getElementAttr($(this).attr("id"));
-                    if (attr.pname && (attr.pname == pname)) {
-                        $(this).attr("fill", "#f00").attr("stroke", "#f00");
-                    }
+                    // TODO: RETRIEVE THE JSON OBJECT WITH ALL THE MEI ATTRIBUTE OF $(this).attr("id")
+                    // THE JSON OBJECT IS OBTAINED WITH THE getElementAttr(id) METHOD OF THE TOOLKIT 
+                    // IF THERE IS AN ATTRIBUTE pname AND IT IS THE SAME AS OUR VARIABLE pname, HIGLIGHT THE ELEMENT
                 });
             }
             
