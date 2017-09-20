@@ -4,7 +4,7 @@
         <!--/////////////////////--> 
         <!-- The Verovio toolkit -->
         <!--/////////////////////-->         
-        <script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
+        // TODO: INCLUDE THE TOOLKIT
         <!--////////////////////--> 
         <!-- We also use jQuery -->
         <!--////////////////////-->
@@ -32,8 +32,8 @@
                 , dataType: "text"
                 , success: function(data) {
                     // TODO: RETRIEVE THE SVG FROM THE TOOLKIT INTO AN svg VARIABLE USING renderData() OF THE TOOLKIT
-                    // PASS data TO THE TOOLKIT THAT NOW CONTAINS THE MEI DATA AS STRING
-                    $("#svg_output").html(svg);
+                    // - PASS data TO THE TOOLKIT THAT NOW CONTAINS THE MEI DATA AS STRING
+                    // - SET THE SVG AS CONTENT OF THE HTML DIV
                 }
             });
         </script>
