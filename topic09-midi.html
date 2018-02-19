@@ -51,15 +51,11 @@
             function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(document).width() * 100 / zoom ;
-                border = 50;
                 options = {
-                            inputFormat: 'mei',
                             pageHeight: pageHeight,
                             pageWidth: pageWidth,
-                            border: border,
                             scale: zoom,
-                            adjustPageHeight: 1,
-                            ignoreLayout: 1
+                            adjustPageHeight: true
                         };
                 vrvToolkit.setOptions(options);
             }
@@ -73,7 +69,7 @@
             }
             
             function loadPage() {
-                svg = vrvToolkit.renderPage(page, {});
+                svg = vrvToolkit.renderToSVG(page, {});
                 $("#svg_output").html(svg);
                 
                 ////////////////////////////////////////
@@ -103,7 +99,7 @@
             ////////////////////////////////////////////
             function play_midi() {
                 if (isPlaying == false) {
-                    var base64midi = vrvToolkit.renderToMidi();
+                    var base64midi = vrvToolkit.renderToMIDI();
                     var song = 'data:audio/midi;base64,' + base64midi;
                     $("#player").show();
                     $("#player").midiPlayer.play(song);

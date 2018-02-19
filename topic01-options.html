@@ -32,8 +32,7 @@
                             pageHeight: pageHeight,
                             pageWidth: pageWidth,
                             scale: zoom,
-                            adjustPageHeight: 1,
-                            ignoreLayout: 1
+                            adjustPageHeight: true
                         };
                 vrvToolkit.setOptions(options);
             }
@@ -44,7 +43,7 @@
             function loadData(data) {
                 setOptions();
                 vrvToolkit.loadData(data);
-                svg = vrvToolkit.renderPage(1, {});
+                svg = vrvToolkit.renderToSVG(1, {});
                 $("#svg_output").html(svg);
             }
             
