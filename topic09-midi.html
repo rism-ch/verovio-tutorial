@@ -78,8 +78,7 @@
                 $(".note").click(function() {
                     var id = $(this).attr("id");
                     var time = vrvToolkit.getTimeForElement(id);
-                    // bug! time needs to be divided by 2
-                    $("#midi-player").midiPlayer.seek(time / 2);
+                    $("#midi-player").midiPlayer.seek(time);
                 });
             };
             
@@ -111,8 +110,8 @@
             /* Two callback functions passed to the MIDI player */
             //////////////////////////////////////////////////////
             var midiUpdate = function(time) {
-                // bug! time needs to be * 2 (- 800 for adjustment)
-                var vrvTime = Math.max(0, 2 * time - 800);
+                // time needs to - 400 for adjustment
+                var vrvTime = Math.max(0, time - 400);
                 var elementsattime = vrvToolkit.getElementsAtTime(vrvTime);
                 if (elementsattime.page > 0) {
                     if (elementsattime.page != page) {
@@ -160,7 +159,7 @@
                 
                 $("#player").midiPlayer({
                     color: "#c00",
-                    onUnpdate: midiUpdate,
+                    onUpdate: midiUpdate,
                     onStop: midiStop,
                     width: 250
                 });
