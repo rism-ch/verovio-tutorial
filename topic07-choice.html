@@ -1,27 +1,27 @@
 <html>
     <head>
         <title>Verovio example for interaction with choice elements</title>
-        <script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
+        <script src="https://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
         <!-- We also use jQuery -->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script>
         <!-- Basic events from example 02 -->
         <script src="javascript/basic-events.js" type="text/javascript" ></script>
         <!-- A stylesheet for the help overlay -->
-        <link rel="stylesheet" href="css/tutorial.css" />   
+        <link rel="stylesheet" href="css/tutorial.css" />
     </head>
     <body style="margin: 0px;">
-        
+
         <!--//////////////////-->
         <!-- A choice overlay -->
         <!--//////////////////-->
         <div id="choice_overlay"></div>
-        
+
         <!-- A help overlay -->
         <div id="help_overlay">
             <p>Click on the blue elements to select an alternative content</p>
             <p>Press <b>'r'</b> to reset all to the default</p>
         </div>
-        
+
         <!-- The div where we are going to insert the SVG -->
         <div id="svg_output"/>
 
@@ -31,14 +31,14 @@
             var zoom = 60;
             var pageHeight = 2970;
             var pageWidth = 2100;
-            
+
             //////////////////////////////////////////////
             /* Variables for selecting a <choice> child */
             //////////////////////////////////////////////
             var choices = {};
             var choiceXPathQuery = [];
             var choiceId = "";
-            
+
             function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(window).width() * 100 / zoom ;
@@ -51,15 +51,15 @@
                         };
                 vrvToolkit.setOptions(options);
             }
-            
+
             function loadData(data) {
                 setOptions();
                 vrvToolkit.loadData(data);
-                
+
                 page = 1;
                 loadPage();
             }
-            
+
             function loadPage() {
                 ////////////////////////////////////////////////////
                 /* Reload the page with the choice if we made one */
@@ -70,17 +70,17 @@
                     else page = elementPage;
                     choiceId = "";
                 }
-                
+
                 svg = vrvToolkit.renderToSVG(page, {});
                 $("#choice_overlay").hide();
                 $("#svg_output").html(svg);
-                
+
                 /////////////////////////////////////////////////////
                 /* Highlights the orign in blue and the reg in red */
                 /////////////////////////////////////////////////////
                 $(".orig, .unclear").attr("fill", "#00e").attr("stroke", "#00e");
                 $(".reg").attr("fill", "#d00").attr("stroke", "#d00");
-                
+
                 ///////////////////////////////////////////////
                 /* Bind a click event on all choice children */
                 ///////////////////////////////////////////////
@@ -111,7 +111,7 @@
                     });
                 });
             };
-            
+
             ////////////////////////////////////////////
             /* A function for choosing a choice child */
             ////////////////////////////////////////////
@@ -130,7 +130,7 @@
                 choiceId = choice;
                 loadFile();
             }
-            
+
             function loadFile() {
                 console.log(choiceXPathQuery);
                 file = "mei/Beethoven_Sonata_no.29_op.106.mei";
@@ -142,13 +142,13 @@
                     }
                 });
             }
-            
+
             $(document).ready(function() {
-                
+
                 $(window).keyup(function(event){
                     // Process navigation an zoom basic events
                     processBasicEvents(event);
-                    
+
                     /////////////////////////////////////////////
                     /* Hide the overlay on ESC of reset on 'r' */
                     /////////////////////////////////////////////
@@ -162,11 +162,11 @@
                         loadFile();
                     }
                 });
-                
+
                 $(window).resize(function(){
                     applyZoom();
                 });
-                
+
                 loadFile();
             });
         </script>
