@@ -1,53 +1,53 @@
 <html>
     <head>
         <title>Verovio example with a MIDI Player</title>
-        <script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
+        <script src="https://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
         <!-- We also use jQuery -->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script>
         <!-- Basic events from example 02 -->
         <script src="javascript/basic-events.js" type="text/javascript" ></script>
         <!-- A stylesheet for the help overlay -->
-        <link rel="stylesheet" href="css/tutorial.css" /> 
-           
+        <link rel="stylesheet" href="css/tutorial.css" />
+
         <!--/////////////-->
         <!-- MIDI Player -->
-        <!--/////////////-->  
+        <!--/////////////-->
         <script type="text/javascript" language="javascript" src="javascript/midi-player/wildwebmidi.js"></script>
         <script type="text/javascript" language="javascript" src="javascript/midi-player/midiplayer.js"></script>
         <link rel="stylesheet" href="css/midiplayer.css" />
-        
+
     </head>
     <body style="margin: 0px;">
-        
+
         <!-- A help overlay -->
         <div id="help_overlay">
             <p>Press <b>p</b> to start playing</p>
             <p>Click on any note or in the player progress bar to jump in the piece</p>
         </div>
-        
-        <!--//////////////////////////////////////////////////////-->         
+
+        <!--//////////////////////////////////////////////////////-->
         <!-- The div where we are going to insert the MIDI Player -->
-        <!--//////////////////////////////////////////////////////--> 
+        <!--//////////////////////////////////////////////////////-->
         <div style="height: 30px;">
             <div id="player" style="z-index: 20; position: absolute; display: none;"></div>
         </div>
-        
-        <!-- The div where we are going to insert the SVG -->       
+
+        <!-- The div where we are going to insert the SVG -->
         <div id="svg_output"/>
-        
+
         <script type="text/javascript">
             var vrvToolkit = new verovio.toolkit();
             var page = 1;
             var zoom = 60;
             var pageHeight = 2970;
             var pageWidth = 2100;
-            
+
             ////////////////////////////////////////////////
             /* A variable for storing the highlighted ids */
             ////////////////////////////////////////////////
             var ids = [];
             var isPlaying = false;
-            
+
             function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(document).width() * 100 / zoom ;
@@ -59,19 +59,19 @@
                         };
                 vrvToolkit.setOptions(options);
             }
-            
+
             function loadData(data) {
                 setOptions();
                 vrvToolkit.loadData(data);
-                
+
                 page = 1;
                 loadPage();
             }
-            
+
             function loadPage() {
                 svg = vrvToolkit.renderToSVG(page, {});
                 $("#svg_output").html(svg);
-                
+
                 ////////////////////////////////////////
                 /* Bind a on click event to each note */
                 ////////////////////////////////////////
@@ -81,7 +81,7 @@
                     $("#midi-player").midiPlayer.seek(time);
                 });
             };
-            
+
             function loadFile() {
                 file = "mei/Chopin_Etude_op.10_no.9.mei";
                 $.ajax({
@@ -92,7 +92,7 @@
                     }
                 });
             }
-            
+
             ////////////////////////////////////////////
             /* A function that start playing the file */
             ////////////////////////////////////////////
@@ -105,7 +105,7 @@
                     isPlaying = true;
                 }
             }
-            
+
             //////////////////////////////////////////////////////
             /* Two callback functions passed to the MIDI player */
             //////////////////////////////////////////////////////
@@ -121,22 +121,22 @@
                     if ((elementsattime.notes.length > 0) && (ids != elementsattime.notes)) {
                         ids.forEach(function(noteid) {
                             if ($.inArray(noteid, elementsattime.notes) == -1) {
-                                $("#" + noteid).attr("fill", "#000").attr("stroke", "#000"); 
+                                $("#" + noteid).attr("fill", "#000").attr("stroke", "#000");
                             }
                         });
                         ids = elementsattime.notes;
                         ids.forEach(function(noteid) {
                             if ($.inArray(noteid, elementsattime.notes) != -1) {
-                                $("#" + noteid).attr("fill", "#c00").attr("stroke", "#c00");; 
+                                $("#" + noteid).attr("fill", "#c00").attr("stroke", "#c00");;
                             }
-                        }); 
+                        });
                     }
                 }
             }
 
             var midiStop = function() {
                 ids.forEach(function(noteid) {
-                    $("#" + noteid).attr("fill", "#000").attr("stroke", "#000"); 
+                    $("#" + noteid).attr("fill", "#000").attr("stroke", "#000");
                 });
                 $("#player").hide();
                 isPlaying = false;
@@ -156,7 +156,7 @@
                 $(window).resize(function(){
                     applyZoom();
                 });
-                
+
                 $("#player").midiPlayer({
                     color: "#c00",
                     onUpdate: midiUpdate,
