@@ -1,16 +1,16 @@
 <html>
     <head>
         <title>Verovio example with options</title>
-        <script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
+        <script src="https://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
         <!-- We also use jQuery -->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script>
     </head>
     <body style="margin: 0px;">
         <!-- The div where we are going to insert the SVG -->
         <div id="svg_output"/>
-        
+
         <script type="text/javascript">
-        
+
             ///////////////////////////
             /* Some global variables */
             ///////////////////////////
@@ -18,7 +18,7 @@
             var zoom = 50;
             var pageHeight = 2970;
             var pageWidth = 2100;
-            
+
             ///////////////////////////////////////////////////
             /* A function for setting options to the toolkit */
             ///////////////////////////////////////////////////
@@ -32,22 +32,21 @@
                             pageHeight: pageHeight,
                             pageWidth: pageWidth,
                             scale: zoom,
-                            adjustPageHeight: 1,
-                            ignoreLayout: 1
+                            adjustPageHeight: true
                         };
                 vrvToolkit.setOptions(options);
             }
-            
+
             ////////////////////////////////////////////////////////////////////////////////
             /* A function that sets the options, loads the data and render the first page */
             ////////////////////////////////////////////////////////////////////////////////
             function loadData(data) {
                 setOptions();
                 vrvToolkit.loadData(data);
-                svg = vrvToolkit.renderPage(1, {});
+                svg = vrvToolkit.renderToSVG(1, {});
                 $("#svg_output").html(svg);
             }
-            
+
             $(document).ready(function() {
                 var file = "mei/Beethoven_StringQuartet_op.18_no.2.mei";
                 $.ajax({

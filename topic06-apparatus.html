@@ -1,22 +1,22 @@
 <html>
     <head>
         <title>Verovio example with apparatus</title>
-        <script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
+        <script src="https://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
         <!-- We also use jQuery -->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script>
         <!-- Basic events from example 02 -->
         <script src="javascript/basic-events.js" type="text/javascript" ></script>
         <!-- A stylesheet for the help overlay -->
-        <link rel="stylesheet" href="css/tutorial.css" />   
+        <link rel="stylesheet" href="css/tutorial.css" />
     </head>
     <body style="margin: 0px;">
-        
+
         <!-- A help overlay -->
         <div id="help_overlay">
             <p>Press <b>1</b> to show and highlight the lemma</p>
             <p>Press <b>2</b> to show and highlight the readings ("#source.1570")</p>
         </div>
-        
+
         <!-- The div where we are going to insert the SVG -->
         <div id="svg_output"/>
 
@@ -26,12 +26,12 @@
             var zoom = 50;
             var pageHeight = 2970;
             var pageWidth = 2100;
-            
+
             ///////////////////////////////////////////////////
             /* A variable for selecting the <rdg> in a <app> */
             ///////////////////////////////////////////////////
-            var appXPath = "";
-            
+            var appXPath = [];
+
             function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(window).width() * 100 / zoom ;
@@ -39,32 +39,31 @@
                             pageHeight: pageHeight,
                             pageWidth: pageWidth,
                             scale: zoom,
-                            adjustPageHeight: 1,
-                            ignoreLayout: 1,
+                            adjustPageHeight: true,
                             appXPathQuery: appXPath
                         };
                 vrvToolkit.setOptions(options);
             }
-            
+
             function loadData(data) {
                 setOptions();
                 vrvToolkit.loadData(data);
-                
+
                 page = 1;
                 loadPage();
             }
-            
+
             function loadPage() {
-                svg = vrvToolkit.renderPage(page, {});
+                svg = vrvToolkit.renderToSVG(page, {});
                 $("#svg_output").html(svg);
-                
+
                 ///////////////////////////////////////////////////
                 /* Highlights the lem in blue and the rdg in red */
                 ///////////////////////////////////////////////////
                 $(".lem").attr("fill", "#00e").attr("stroke", "#00e");
                 $(".rdg").attr("fill", "#d00").attr("stroke", "#d00");
             };
-            
+
             function loadFile() {
                 file = "mei/Marenzio_Quarto_a_6_02.mei";
                 $.ajax({
@@ -75,30 +74,30 @@
                     }
                 });
             }
-            
+
             $(document).ready(function() {
-                
+
                 $(window).keyup(function(event){
                     // Process navigation an zoom basic events
                     processBasicEvents(event);
-                    
+
                     //////////////////////////////////////////
                     /* Key events for switching the reading */
                     //////////////////////////////////////////
                     if (event.keyCode == 49) {
-                        appXPath = ""
+                        appXPath = [];
                         loadFile();
                     }
                     else if (event.keyCode == 50) {
-                        appXPath = "./rdg[contains(@source, '#source.1570')]";
+                        appXPath = ["./rdg[contains(@source, '#source.1570')]"];
                         loadFile();
                     }
                 });
-                
+
                 $(window).resize(function(){
                     applyZoom();
                 });
-                
+
                 loadFile();
             });
         </script>

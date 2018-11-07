@@ -1,21 +1,21 @@
 <html>
     <head>
         <title>Verovio example with SaxonCE</title>
-        <script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
+        <script src="https://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript" ></script>
         <!-- We also use jQuery -->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script> 
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" ></script>
         <!-- Basic events from example 02 -->
         <script src="javascript/basic-events.js" type="text/javascript" ></script>
         <!-- A stylesheet for the help overlay -->
-        <link rel="stylesheet" href="css/tutorial.css" /> 
-        
+        <link rel="stylesheet" href="css/tutorial.css" />
+
         <!--///////////-->
         <!-- Saxon-CE  -->
-        <!--///////////-->  
+        <!--///////////-->
         <script type="text/javascript" language="javascript" src="javascript/Saxonce/Saxonce.nocache.js"></script>
     </head>
     <body style="margin: 0px;">
-        
+
         <!-- A help overlay -->
         <div id="help_overlay">
             <p>Press <b>1</b> to show the violin 1 part</p>
@@ -23,22 +23,22 @@
             <p>Press <b>3</b> to show the viola part</p>
             <p>Press <b>4</b> to show the cello part</p>
         </div>
-        
+
         <!-- The div where we are going to insert the SVG -->
         <div id="svg_output"/>
-        
+
         <script type="text/javascript">
             var vrvToolkit = new verovio.toolkit();
             var page = 1;
             var zoom = 60;
             var pageHeight = 2970;
             var pageWidth = 2100;
-            
+
             /////////////////////////////////////////////////////////////
             /* A variable for selecting the voice (staff) with SaxonCE */
             /////////////////////////////////////////////////////////////
             var voice = 1;
-            
+
             function setOptions() {
                 pageHeight = $(document).height() * 100 / zoom ;
                 pageWidth = $(document).width() * 100 / zoom ;
@@ -46,14 +46,13 @@
                             pageHeight: pageHeight,
                             pageWidth: pageWidth,
                             scale: zoom,
-                            adjustPageHeight: 1,
-                            ignoreLayout: 1,
+                            adjustPageHeight: true,
                             spacingStaff: 0,
                             spacingSystem: 0
                         };
                 vrvToolkit.setOptions(options);
             }
-            
+
             function loadData(data) {
                 setOptions();
                 vrvToolkit.loadData(data);
@@ -61,12 +60,12 @@
                 page = 1;
                 loadPage();
             }
-            
+
             function loadPage() {
-                svg = vrvToolkit.renderPage(page, {});
+                svg = vrvToolkit.renderToSVG(page, {});
                 $("#svg_output").html(svg);
             };
-            
+
             ////////////////////////////////////////////////////////
             /* A function that applies the XSLT and load the data */
             ////////////////////////////////////////////////////////
@@ -78,13 +77,13 @@
                 proc.setParameter(null, "voice", voice);
                 loadData(Saxon.serializeXML(proc.transformToDocument(xml)));
             }
-            
+
             $(document).ready(function() {
-                
+
                 $(window).keyup(function(event){
                     // Process navigation an zoom basic events
                     processBasicEvents(event);
-                    
+
                     /////////////////////////
                     /* Selecting the voice */
                     /////////////////////////
@@ -94,13 +93,13 @@
                         loadFile();
                     }
                 });
-                
+
                 $(window).resize(function(){
                     applyZoom();
                 });
             });
-            
-            var onSaxonLoad = function() {        
+
+            var onSaxonLoad = function() {
                 loadFile();
             };
         </script>
