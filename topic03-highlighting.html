@@ -74,21 +74,30 @@
                 /* Hightlight the second staff in blue */
                 /////////////////////////////////////////
                 else if (choice == 2) {
-                    $(".measure .staff:nth-child(2)" ).attr("fill", "#00e").attr("stroke", "#00e");
+                    // apply attributes to staffs that are siblings of first staff
+                    $(".measure .staff ~ .staff " ).attr("fill", "#00e").attr("stroke", "#00e");
+// remove attributes from staffs that are siblings to second staff
+                    $(".measure .staff ~ .staff ~ .staff " ).attr("fill", "#000").attr("stroke", "#000");
                 }
 
                 //////////////////////////////////////////////////////////
-                /* Hightlight the staffDef of the fourth staff in green */
+                /* Hightlight the staffDef of the third staff in green */
                 //////////////////////////////////////////////////////////
                 else if (choice == 3) {
-                    $(".measure .staff:nth-child(4) .staffDef" ).attr("fill", "#0c0").attr("stroke", "#0c0");
+                    // apply attributes to staffs that are siblings of second staff
+                    $(".measure .staff ~ .staff ~ .staff .clef, .measure .staff ~ .staff ~ .staff .keySig, .measure .staff ~ .staff ~ .staff .meterSig" ).attr("fill", "#0c0").attr("stroke", "#0c0");
+// remove attributes from staffs that are siblings to third staff
+                    $(".measure .staff ~ .staff ~ .staff ~ .staff .clef, .measure .staff ~ .staff ~ .staff ~ .staff .keySig, .measure .staff ~ .staff ~ .staff ~ .staff .meterSig" ).attr("fill", "#000").attr("stroke", "#000");
                 }
 
                 ///////////////////////////////////////////////////////////////////////////
                 /* Gray out the fourth staff after the fifth measure on the current page */
                 ///////////////////////////////////////////////////////////////////////////
                 else if (choice == 4) {
-                    $(".system .measure:gt(4) .staff:nth-child(4)").attr("fill", "#ccc").attr("stroke", "#ccc");
+                    // apply attributes to staffs that are siblings of third staff
+                    $(".system .measure:gt(4) .staff ~ .staff ~ .staff ~.staff ").attr("fill", "#ccc").attr("stroke", "#ccc");
+// remove attributes from staffs that are siblings to fourth staff
+                    $(".system .measure:gt(4) .staff ~ .staff ~ .staff ~ .staff ~ .staff").attr("fill", "#000").attr("stroke", "#000");
                 }
 
                 else {
